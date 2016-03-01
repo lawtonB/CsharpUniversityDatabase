@@ -114,7 +114,7 @@ namespace University
       foundCourseName = rdr.GetString(1);
       foundCourseNumber = rdr.GetInt32(2);
     }
-    Course foundCourse = new Course(foundCourseDescription, foundCourseNumber, foundCourseId);
+    Course foundCourse = new Course(foundCourseName, foundCourseNumber, foundCourseId);
 
     if (rdr != null)
     {
@@ -133,7 +133,7 @@ namespace University
     SqlDataReader rdr;
     conn.Open();
 
-    SqlCommand cmd = new SqlCommand("UPDATE courses SET name = @CourseName OUTPUT INSERTED.name WHERE id = @CourseId; UPDATE courses SET course_id = @CourseNumber OUTPUT INSERTED.course_id WHERE id = @CourseId;", conn);
+    SqlCommand cmd = new SqlCommand("UPDATE courses SET name = @CourseName OUTPUT INSERTED.name WHERE id = @CourseId; UPDATE courses SET course_number = @CourseNumber OUTPUT INSERTED.course_number WHERE id = @CourseId;", conn);
 
     SqlParameter newNameParameter = new SqlParameter();
     newNameParameter.ParameterName = "@CourseName";
@@ -242,13 +242,13 @@ namespace University
       {
         queryReader.Close();
       }
-      if (conn != null)
-      {
-        conn.Close();
-      }
-        return students;
-      }
     }
+    if (conn != null)
+    {
+      conn.Close();
+    }
+    return students;
+  }
 
 
     public void Delete()

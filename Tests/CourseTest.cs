@@ -97,12 +97,12 @@ namespace University
     {
       //Arrange
       string courseName = "english";
-      Course testCourse = new Course(courseName);
+      Course testCourse = new Course(courseName, 1);
       testCourse.Save();
       string newName = "economics";
 
       //Act
-      testCourse.Update(newName);
+      testCourse.Update(newName, 1);
 
       string result = testCourse.GetName();
 
@@ -113,11 +113,11 @@ namespace University
     {
       //Arrange
       string courseName1 = "english";
-      Course testCourse1 = new Course(courseName1);
+      Course testCourse1 = new Course(courseName1, 1);
       testCourse1.Save();
 
-      string CourseName2 = "economics";
-      Course testCourse2 = new Course(courseName2);
+      string courseName2 = "economics";
+      Course testCourse2 = new Course(courseName2, 1);
       testCourse2.Save();
 
       //Act
@@ -183,7 +183,7 @@ namespace University
       testStudent.Save();
 
       string courseName = "english";
-      Course testCourse = new Course(courseName);
+      Course testCourse = new Course(courseName, 1);
       testCourse.Save();
 
       //Act
