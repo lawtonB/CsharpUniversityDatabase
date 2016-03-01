@@ -56,6 +56,41 @@ namespace University
       }
     }
 
+    public void Save()
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr;
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("INSERT INTO courses (name, course_number) OUTPUT INSERTED.id VALUES (@StudentName, @CourseNumber);", conn);
+
+      SqlParameter nameParameter = new SqlParameter();
+      nameParameter.ParameterName = "@StudentName";
+      nameParameter.Value = this.GetName();
+
+
+      SqlParameter CourseNumberParameter = new SqlParameter();
+      CourseNumberParameter.ParameterName = "@CourseNumber";
+      CourseNumberParameter.Value = this.GetCourseNumber();
+
+      cmd.Parameters.Add(nameParameter);
+      cmd.Parameters.Add(CourseNumberParameter);
+      rdr = cmd.ExecuteReader();
+
+      while(rdr.Read())
+      {
+        this._id = rdr.GetInt32(0);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if(conn != null)
+      {
+        conn.Close();
+    }
+  }
+
 
   }
 }

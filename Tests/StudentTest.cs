@@ -49,6 +49,57 @@ namespace University
       Assert.Equal(testList, result);
     }
 
+    [Fact]
+    public void Test_SaveAssignsIdToObject()
+    {
+      //Arrange
+      Student testStudent = new Student("larry", new DateTime(2016, 2, 2));
+      testStudent.Save();
+
+      //Act
+      Student savedStudent = Student.GetAll()[0];
+
+      int result = savedStudent.GetId();
+      int testId = testStudent.GetId();
+
+      //Assert
+      Assert.Equal(testId, result);
+    }
+
+    [Fact]
+    public void Test_FindFindsStudentInDatabase()
+    {
+      //Arrange
+      Student testStudent = new Student("larry", new DateTime(2016, 2, 2));
+      testStudent.Save();
+
+      //Act
+      Student result = Student.Find(testStudent.GetId());
+
+      //Assert
+      Assert.Equal(testStudent, result);
+    }
+
+    [Fact]
+    public void Test_AddCourse_AddsCourseToStudent()
+    {
+      //Arrange
+      Student testStudent = new Student("larry", new DateTime(2016, 2, 2));
+      testStudent.Save();
+
+      Course testCourse = new Course("english", 1);
+      testCourse.Save();
+
+      //Act
+      testStudent.AddCourse(testCourse);
+
+      List<Course> result = testStudent.GetCourses();
+      List<Course> testList = new List<Course>{testCourse};
+
+      //Assert
+      Assert.Equal(testList, result);
+    }
+
     public void Dispose()
     {
         // Course.DeleteAll();
