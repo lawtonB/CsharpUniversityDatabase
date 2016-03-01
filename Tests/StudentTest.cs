@@ -100,6 +100,51 @@ namespace University
       Assert.Equal(testList, result);
     }
 
+    [Fact]
+    public void Test_GetCourses_ReturnsAllStudentCourses()
+    {
+      //Arrange
+      Student testStudent = new Student("larry", new DateTime(2016, 2, 2));
+      testStudent.Save();
+
+      Course testCourse1 = new Course("english", 1);
+      testCourse1.Save();
+
+      Course testCourse2 = new Course("french", 2);
+      testCourse2.Save();
+
+      //Act
+      testStudent.AddCourse(testCourse1);
+      List<Course> result = testStudent.GetCourses();
+      List<Course> testList = new List<Course> {testCourse1};
+
+      //Assert
+      Assert.Equal(testList, result);
+    }
+
+    [Fact]
+    public void Test_Delete_DeletesStudentAssociationsFromDatabase()
+    {
+      //Arrange
+      Course testCourse = new Course("english", 1);
+      testCourse.Save();
+
+      string testName = "larry";
+      Student testStudent = new Student(testName, new DateTime(2016, 2, 2));
+      testStudent.Save();
+
+      //Act
+      testStudent.AddCourse(testCourse);
+      testStudent.Delete();
+
+      List<Student> resultCourseStudents = testCourse.GetStudents();
+      List<Student> testStudents = new List<Student> {};
+
+      //Assert
+      Assert.Equal(testStudents, resultCourseStudents);
+    }
+
+
     public void Dispose()
     {
         // Course.DeleteAll();
