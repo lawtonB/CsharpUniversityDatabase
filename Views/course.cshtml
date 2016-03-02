@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+<h1>Course List</h1>
+@Model["course"].GetName() - @Model["course"].GetCourseNumber()
+<hr />
+@if (@Model["courseStudent"]).Count != 0)
+{
+  <p>all courses</p>
+  <ul>
+  @foreach (var student in @Model["studentCourses"])
+  {
+    <li>@student.GetName() - @student.GetEnrollmentDate()</li>
+  }
+</ul>
+}
+<h4>Add a student to this class</h4>
+<form class="" action="/class/add_student" method="post">
+  <input type="text" name="class-id" value="@Model["class"].GetId()">
+  <label for="student-id">Select a student</label>
+  <select name="student-id" id="class-id" type="text">
+    @foreach (var student in @Model["allStudents"])
+    {
+      <option value='@student.GetId()'>@student.GetName()</option>
+    }
+  </select>
+  <button type="submit" name="button">Add</button>
+</form>
+<a href="/">Return home</a>
+</body>
+</html>

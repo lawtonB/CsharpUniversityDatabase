@@ -270,6 +270,47 @@ namespace University
       return courses;
     }
 
+    public void Update(string newName, DateTime newEnrollmentDate)
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr;
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("UPDATE students SET name = @StudentName OUTPUT INSERTED.name WHERE id = @StudentId; UPDATE students SET enrollment_date = @EnrollmentDate OUTPUT INSERTED.enrollment_date WHERE id = @EnrollmentDate;", conn);
+
+      SqlParameter newNameParameter = new SqlParameter();
+      newNameParameter.ParameterName = "@StudentName";
+      newNameParameter.Value = newName;
+      cmd.Parameters.Add(newNameParameter);
+
+      SqlParameter newEnrollmentDateParameter = new SqlParameter();
+      newEnrollmentDateParameter.ParameterName = "@EnrollmentDate";
+      newEnrollmentDateParameter.Value = newEnrollmentDate;
+      cmd.Parameters.Add(newEnrollmentDateParameter);
+
+
+      SqlParameter studentIdParameter = new SqlParameter();
+      studentIdParameter.ParameterName = "@StudentId";
+      studentIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(studentIdParameter);
+      rdr = cmd.ExecuteReader();
+
+      while(rdr.Read())
+      {
+        this._name = rdr.GetString(0);
+      }
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
+
 
 
   }

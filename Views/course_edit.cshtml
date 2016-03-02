@@ -1,0 +1,9 @@
+<h2>Edit course: @Model.GetName() - @Model.GetCourseNumber</h2>
+<form action="/course/edit/@Model.GetId()" method="post">
+  <input type="hidden" name="_method" value="PATCH">
+  <input name="course-name" type="hidden" value="@Model.GetId()">
+  <label for="course-name">course name</label>
+  <input id="course-name" name="course-name" type="text">
+  <button type="submit">Submit</button>
+</form>
+<a href="/">home</a>
